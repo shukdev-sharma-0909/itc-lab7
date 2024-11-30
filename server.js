@@ -20,10 +20,10 @@ app.get('/generate_random', (req, res) => {
 
 // Mad Lib form submission handler
 app.post('/submit', (req, res) => {
-  const { adjective, noun, verb, adverb, number } = req.body;
+  const { adjective, noun, verb, place, pluralNoun } = req.body;
 
   // Check if all fields are filled
-  if (!adjective || !noun || !verb || !adverb || !number) {
+  if (!adjective || !noun || !verb || !pluralNoun || !place) {
     res.send(`
       <h1>Submission Incomplete</h1>
       <p>Please ensure all fields are filled out correctly.</p>
@@ -33,7 +33,7 @@ app.post('/submit', (req, res) => {
   }
 
   // Generate the Mad Lib story
-  const madLibStory = `Today I saw a ${number} ${adjective} ${noun}s, and they all decided to ${verb} ${adverb}!`;
+  const madLibStory = `Today I saw a ${number} ${adjective} ${noun}s, and they all decided to ${place} ${pluralNoun}!`;
 
   // Send the success page with the generated Mad Lib
   res.send(`
