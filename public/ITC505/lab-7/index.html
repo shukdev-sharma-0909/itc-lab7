@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mad Lib Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="main-container">
+    <h1>Create Your Mad Lib Story</h1>
+    <form id="madLibForm" action="/submit" method="POST">
+      <button type="button" class="randomize-all-btn" onclick="generateAllRandom()">Generate Random Inputs</button>
+      <div class="input-field">
+        <label for="noun">Enter a Noun:</label>
+        <input type="text" id="noun" name="noun">
+        <button type="button" class="randomize-btn" onclick="generateRandomWord('noun')">Suggest Random</button>
+      </div>
+
+      <div class="input-field">
+        <label for="verb">Enter a Verb:</label>
+        <input type="text" id="verb" name="verb">
+        <button type="button" class="randomize-btn" onclick="generateRandomWord('verb')">Suggest Random</button>
+      </div>
+
+      <div class="input-field">
+        <label for="adjective">Enter an Adjective:</label>
+        <input type="text" id="adjective" name="adjective">
+        <button type="button" class="randomize-btn" onclick="generateRandomWord('adjective')">Suggest Random</button>
+      </div>
+
+      <div class="input-field">
+        <label for="place">Enter a Place:</label>
+        <input type="text" id="place" name="place">
+        <button type="button" class="randomize-btn" onclick="generateRandomWord('place')">Suggest Random</button>
+      </div>
+
+      <div class="input-field">
+        <label for="pluralNoun">Enter a Plural Noun:</label>
+        <input type="text" id="pluralNoun" name="pluralNoun">
+        <button type="button" class="randomize-btn" onclick="generateRandomWord('pluralNoun')">Suggest Random</button>
+      </div>
+
+      <button type="submit">Generate Mad Lib</button>
+    </form>
+  </div>
+
+  <div class="extra-info">
+    <h3><strong>Additional Details:</strong></h3>
+    <p><strong>Objective:</strong> Users input various word types (noun, verb, adjective, etc.) to create a humorous Mad Lib story. Features include form validation, random word suggestions, and an attractive design.</p>
+    <p><strong>Implementation:</strong> A user-friendly form collects inputs, which are processed through a backend server. CSS ensures appealing visuals for both the form and the result page.</p>
+    <p><strong>Challenges:</strong> Validating user inputs and managing static file dependencies were addressed by implementing server-side checks and organizing asset handling effectively.</p>
+    <p><strong>Enhancements:</strong> Responsive design ensures usability across devices, error messages guide users, and random word generation adds interactivity.</p>
+  </div>
+
+  <footer>
+    <p>Page last updated:
+      <span id="lastModified"></span>
+    </p>
+  </footer>
+
+  <script type="text/javascript">
+    const lastModified = document.lastModified;
+    document.getElementById('lastModified').textContent = lastModified;
+
+    function generateRandomWord(type) {
+      const wordBank = {
+        noun: ['table', 'river', 'dragon', 'moon', 'cloud'],
+        verb: ['write', 'laugh', 'swim', 'build', 'explore'],
+        adjective: ['brave', 'cheerful', 'bright', 'spooky', 'tiny'],
+        place: ['park', 'village', 'tower', 'ocean', 'mountain'],
+        pluralNoun: ['flowers', 'chairs', 'shoes', 'stars', 'trees'],
+      };
+
+      document.getElementById(type).value = wordBank[type][Math.floor(Math.random() * wordBank[type].length)];
+    }
+
+    function generateAllRandom() {
+      generateRandomWord('noun');
+      generateRandomWord('verb');
+      generateRandomWord('adjective');
+      generateRandomWord('place');
+      generateRandomWord('pluralNoun');
+    }
+  </script>
+</body>
+
+</html>
