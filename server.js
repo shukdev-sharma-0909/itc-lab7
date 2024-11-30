@@ -2,48 +2,43 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 
-const app = express();
+const server = express();
 
-// Middleware Setup
-app.use(express.urlencoded({ extended: true }));
-app.use(logger('dev'));
+// Middleware
+server.use(express.urlencoded({ extended: true }));
+server.use(logger('dev'));
 
-// Serving static files
-const staticFilesPath = path.join(__dirname, 'public');
-app.use(express.static(staticFilesPath));
+// Static files
+const publicServedFilesPath = path.join(__dirname, 'public');
+server.use(express.static(publicServedFilesPath));
 
-// Random number generator route
-app.get('/generate_random', (req, res) => {
-  const randomNum = Math.floor(Math.random() * 100) + 1;
-  res.send(`Your random number is: ${randomNum}`);
+// Random number route
+server.get('/do_a_random', (req, res) => {
+  res.send(`Your number is: ${Math.floor(Math.random() * 100) + 1}`);
 });
 
-// Mad Lib form submission handler
-app.post('/submit', (req, res) => {
-  const { adjective, noun, verb, place, pluralNoun } = req.body;
+// Mad Lib form submission route
+server.post('/submit', (req, res) => {
+  const { adjective, noun, verb, adverb, number } = req.body;
 
-  // Check if all fields are filled
-  if (!adjective || !noun || !verb || !pluralNoun || !place) {
+  if (!adjective || !noun || !verb || !adverb || !number) {
     res.send(`
-      <h1>Submission Incomplete</h1>
-      <p>Please ensure all fields are filled out correctly.</p>
-      <a href="/ITC505/lab-7/index.html">Return to Form</a>
+      <h1>Submission Failed</h1>
+      <p>Please fill out all fields.</p>
+      <a href="index.html">Go Back to Form</a>
     `);
     return;
   }
 
-  // Generate the Mad Lib story
-  const madLibStory = `Today I saw a ${number} ${adjective} ${noun}s, and they all decided to ${place} ${pluralNoun}!`;
-
-  // Send the success page with the generated Mad Lib
+  const madLib = `Today I saw a ${number} ${adjective} ${noun}s, and they all decided to ${verb} ${adverb}!`;
   res.send(`
-    <h1>Mad Lib Completed!</h1>
-    <p>${madLibStory}</p>
-    <a href="/ITC505/lab-7/index.html">Back to Form</a>
+    <h1>Submission Successful</h1>
+    <p>${madLib}</p>
+    <a href="index.html">Go Back to Form</a>
   `);
 });
 
-// Choose the appropriate port based on the environment
+// Determine the port to listen on
 const port = process.argv[2] === 'local' ? 8080 : 80;
 
-app.listen(port, () => console.log(`Server is running on localhost:${port}`));
+server.listen(port, () => console.log(`Ready on localhost:${port}!`));
