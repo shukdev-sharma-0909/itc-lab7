@@ -19,7 +19,7 @@ app.get('/generate_random', (req, res) => {
 });
 
 // Mad Lib form submission handler
-app.post('/ITC505/lab-7/submit', (req, res) => {
+app.post('/submit', (req, res) => {
   const { adjective, noun, verb, adverb, number } = req.body;
 
   // Check if all fields are filled
